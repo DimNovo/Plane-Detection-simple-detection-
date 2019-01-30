@@ -71,14 +71,11 @@ class ViewController: UIViewController {
     
     func createFloor (anchor: ARPlaneAnchor) -> SCNNode {
         let node = SCNNode()
-        
         let extent = anchor.extent
-        
         let geometry = SCNPlane(width: CGFloat(extent.x),
                                 height: CGFloat(extent.z))
         geometry.firstMaterial?.diffuse.contents = UIColor.blue
         node.geometry = geometry
-        
         node.eulerAngles.x = -.pi / 2
         node.opacity = 0.25
         
@@ -87,30 +84,16 @@ class ViewController: UIViewController {
     
     func createWall (anchor: ARPlaneAnchor) -> SCNNode {
         let node = SCNNode()
-        
         let extent = anchor.extent
-        
         let geometry = SCNPlane(width: CGFloat(extent.x),
                                 height: CGFloat(extent.z))
         geometry.firstMaterial?.diffuse.contents = UIColor.red
         node.geometry = geometry
-        
         node.eulerAngles.x = -.pi / 2
         node.opacity = 0.25
         
         return node
     }
-    
-    func createCampus (anchor: ARPlaneAnchor) -> SCNNode {
-        let node = SCNScene(named: "art.scnassets/Campus.scn")!
-            .rootNode.clone()
-        
-        let center = anchor.center
-        node.position = SCNVector3(center.x, 0, center.y)
-        
-        return node
-    }
-    
 }
 
 // MARK: - ARSCNViewDelegate
@@ -124,17 +107,13 @@ extension ViewController: ARSCNViewDelegate {
         
         let floor = createFloor(anchor: anchor)
         let wall = createWall(anchor: anchor)
-        let ship = createCampus(anchor: anchor)
-        node.addChildNode(ship)
         
-        // Find plane position )))
+        // MARK: - Find plane position
         switch anchor.alignment {
         case .horizontal:
             node.addChildNode(floor)
-            print(#function, "horizontal")
         case .vertical:
             node.addChildNode(wall)
-            print(#function, "vertical")
         default:
             print("not detected...")
         }
