@@ -98,8 +98,8 @@ class ViewController: UIViewController {
 
 // MARK: - ARSCNViewDelegate
 extension ViewController: ARSCNViewDelegate {
-    func renderer(_ renderer:
-        SCNSceneRenderer,
+    
+    func renderer(_ renderer: SCNSceneRenderer,
                   didAdd node: SCNNode,
                   for anchor: ARAnchor) {
         guard let anchor = anchor as?
@@ -115,7 +115,7 @@ extension ViewController: ARSCNViewDelegate {
         case .vertical:
             node.addChildNode(wall)
         default:
-            print("not detected...")
+            print(#function, "not detected...")
         }
     }
     
